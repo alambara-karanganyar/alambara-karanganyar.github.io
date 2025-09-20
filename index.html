@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alambara Rentals</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        .gradient-bg {
+            background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.2));
+        }
+
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        .hero-gradient-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 50%;
+            background: linear-gradient(to top, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0) 100%);
+            z-index: 5;
+        }
+
+        .product-card {
+            transition: transform 0.3s ease;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .sticky-header {
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            transition: all 0.3s ease;
+        }
+
+        .sticky-header.scrolled {
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+
+        .back-to-top {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            z-index: 40;
+            width: 3rem;
+            height: 3rem;
+            border-radius: 50%;
+            background: #16a34a;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .back-to-top.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .mobile-menu {
+            transition: all 0.3s ease;
+            max-height: 0;
+            overflow: hidden;
+        }
+
+        .mobile-menu.open {
+            max-height: 300px;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-fade-in-up {
+            animation: fadeIn 0.5s ease-out forwards;
+        }
+
+        .showcase-badge {
+            position: absolute;
+            top: 1rem;
+            left: 1rem;
+            background: #16a34a;
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            z-index: 10;
+        }
+
+        .contact-icon-card {
+            background: #fff;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border-radius: 12px;
+            padding: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            flex-direction: column;
+            width: 100%;
+            transition: transform 0.3s ease;
+        }
+
+        .testimonial-card {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            padding: 24px;
+            height: 100%;
+        }
+
+        .faq-item {
+            border-bottom: 1px solid #e5e7eb;
+            padding: 20px 0;
+        }
+
+        .faq-question {
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+
+        .faq-answer.open {
+            max-height: 300px;
+        }
+    </style>
+</head>
+
+<body class="bg-gray-100 text-gray-800">
+
+   <header class="sticky-header bg-white">
+    <nav class="container mx-auto px-6 py-4 flex items-center justify-between">
+        <div class="flex items-center">
+            <a href="index.html" class="text-green-600 font-bold text-2xl flex items-center">
+                <i class="fas fa-campground mr-2"></i> Alambara
+            </a>
+        </div>
+        <div class="hidden md:flex space-x-8">
+            <a href="index.html" class="text-gray-600 hover:text-green-600 font-medium transition-colors">Beranda</a>
+            <a href="perlengkapan.html" class="text-gray-600 hover:text-green-600 font-medium transition-colors"> Perlengkapan</a>
+            <a href="tentang.html" class="text-gray-600 hover:text-green-600 font-medium transition-colors">Tentang Kami</a>
+            <a href="kontak.html" class="text-gray-600 hover:text-green-600 font-medium transition-colors">kontak</a>
+        </div>
+        <div class="flex items-center space-x-4">
+            <a href="#" class="hidden md:block text-gray-600 hover:text-green-600">
+                <i class="fas fa-search text-lg"></i>
+            </a>
+            
+            <button id="menu-button" class="md:hidden text-gray-600 focus:outline-none">
+                <i class="fas fa-bars text-2xl"></i>
+            </button>
+        </div>
+    </nav>
+    <div id="mobile-menu" class="mobile-menu md:hidden bg-white shadow-md">
+        <div class="container mx-auto px-6 py-3">
+            <a href="index.html" class="block py-3 text-gray-600 hover:text-green-600 font-medium border-b border-gray-100">Beranda</a>
+            <a href="perlengkapan.html"  class="block py-3 text-gray-600 hover:text-green-600 font-medium border-b border-gray-100">Perlengkapan</a>
+            <a href="tentang.html" class="block py-3 text-gray-600 hover:text-green-600 font-medium border-b border-gray-100">Tentang Kami</a>
+            <a href="kontak.html" class="block py-3 text-gray-600 hover:text-green-600 font-medium border-b border-gray-100">Kontak</a>
+            <div class="flex justify-between py-4">
+                <a href="#" class="text-gray-600 hover:text-green-600">
+                    <i class="fas fa-search text-lg"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</header>
+
+
+    <section class="relative bg-center bg-cover h-screen"
+        style="background-image: url('https://images.unsplash.com/photo-1478131143081-80f7f84ca84d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80');">
+        <div class="absolute inset-0 bg-black opacity-40"></div>
+        <div class="hero-gradient-overlay"></div>
+        <div
+            class="container mx-auto px-6 h-full flex items-center justify-center relative z-10 text-white text-center">
+            <div class="max-w-3xl">
+                <h1 class="text-4xl md:text-6xl font-bold leading-tight mb-6">Jelajahi Alam Terbuka dengan Perlengkapan
+                    Terbaik</h1>
+                <p class="text-xl md:text-2xl max-w-2xl mx-auto mb-10">Lihat koleksi perlengkapan camping berkualitas
+                    tinggi untuk petualangan Anda berikutnya. Tenda, sleeping bag, alat masak, dan banyak lagi.</p>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                    <a href="#showcase"
+                        class="bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-8 rounded-lg transition duration-300">
+                        Lihat Koleksi
+                    </a>
+
+                </div>
+            </div>
+        </div>
+        <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 z-10 animate-bounce">
+            <a href="#showcase" class="text-white text-4xl">
+                <i class="fas fa-chevron-down"></i>
+            </a>
+        </div>
+    </section>
+
+    <section id="about" class="py-16 bg-white">
+        <div class="container mx-auto px-6">
+            <div class="flex flex-col md:flex-row items-center">
+                <div class="w-full md:w-1/2 mb-10 md:mb-0">
+                    <img src="https://images.unsplash.com/photo-1523987355523-c7b5b0dd90a7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80"
+                        alt="Tentang CampGear" class="rounded-xl shadow-lg">
+                </div>
+                <div class="w-full md:w-1/2 md:pl-12">
+                    <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-6">Tentang Alambara</h2>
+                    <p class="text-gray-600 mb-4">Alambara Adventure lahir dari kecintaan terhadap alam dan petualangan.
+                        Kami hadir untuk memperkenalkan serta memfasilitasi pengalaman outdoor yang tak terlupakan bagi
+                        siapa saja, baik pemula maupun mereka yang sudah berpengalaman menjelajah alam. Dengan layanan
+                        yang kami sediakan, setiap orang dapat menikmati kegiatan seperti camping, hiking, dan aktivitas
+                        luar ruang lainnya dengan lebih mudah, aman, dan menyenangkan.
+
+                        Kami menyediakan berbagai kebutuhan petualangan, mulai dari penyewaan perlengkapan outdoor
+                        berkualitas hingga paket kegiatan seperti trekking atau camping yang sudah termasuk jasa
+                        pemandu, transportasi, dan logistik. Selain itu, kami juga memberikan layanan konsultasi dalam
+                        pembuatan itinerary perjalanan serta workshop seputar keterampilan dasar survival dan pengenalan
+                        alam.</p>
+                   
+                    <div class="grid grid-cols-2 gap-6">
+                        <div class="flex items-center">
+                            <div class="bg-green-100 p-3 rounded-full mr-4">
+                                <i class="fas fa-shield-alt text-green-600 text-xl"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-bold text-gray-800">Terjamin</h3>
+                                <p class="text-sm text-gray-600">Kualitas terbaik</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center">
+                            <div class="bg-green-100 p-3 rounded-full mr-4">
+                                <i class="fas fa-money-bill-wave text-green-600 text-xl"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-bold text-gray-800">Harga Kompetitif</h3>
+                                <p class="text-sm text-gray-600">harga terbaik di pasaran</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center">
+                            <div class="bg-green-100 p-3 rounded-full mr-4">
+                                <i class="fas fa-tools text-green-600 text-xl"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-bold text-gray-800">Peralatan Lengkap</h3>
+                                <p class="text-sm text-gray-600">500+ item</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center">
+                            <div class="bg-green-100 p-3 rounded-full mr-4">
+                                <i class="fas fa-headset text-green-600 text-xl"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-bold text-gray-800">Bantuan 24/7</h3>
+                                <p class="text-sm text-gray-600">Customer service</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="showcase" class="py-16 bg-white">
+        <div class="container mx-auto px-6">
+            <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4 text-center">Showcase Perlengkapan</h2>
+            <p class="text-gray-600 text-center max-w-2xl mx-auto mb-12">Temukan perlengkapan camping terpopuler dengan
+                kualitas terbaik untuk petualangan Anda</p>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Product 1 -->
+                <div class="product-card bg-white rounded-xl overflow-hidden shadow-md">
+                    <div class="relative overflow-hidden">
+                        <span class="showcase-badge">Populer</span>
+                        <img src="https://i.pinimg.com/736x/cd/c1/15/cdc1159ec7c88124436ba83a73d3623c.jpg"
+                            alt="Tenda Keluarga"
+                            class="w-full h-56 object-cover transition-transform duration-500 hover:scale-105">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="font-bold text-xl mb-2">Tenda Keluarga 4 Orang</h3>
+                        <p class="text-gray-600 text-sm mb-4">Cocok untuk camping bersama keluarga, dilengkapi dengan
+                            rainfly dan groundsheet. Mudah dipasang dan tahan air.</p>
+
+                    </div>
+                </div>
+
+                <!-- Product 2 -->
+                <div class="product-card bg-white rounded-xl overflow-hidden shadow-md">
+                    <div class="relative overflow-hidden">
+                        <img src="https://i.pinimg.com/1200x/79/77/ff/7977ff7df55af90f9456fb80153ec83e.jpg"
+                            alt="Sleeping Bag"
+                            class="w-full h-56 object-cover transition-transform duration-500 hover:scale-105">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="font-bold text-xl mb-2">Sleeping Bag Tahan Air</h3>
+                        <p class="text-gray-600 text-sm mb-4">Nyaman hingga suhu 5°C, bahan waterproof, ringan dan mudah
+                            dibawa. Dilengkapi dengan stuff sack.</p>
+
+                    </div>
+                </div>
+
+                <!-- Product 3 -->
+                <div class="product-card bg-white rounded-xl overflow-hidden shadow-md">
+                    <div class="relative overflow-hidden">
+                        <span class="showcase-badge" style="background: #ef4444;">Baru</span>
+                        <img src="https://i.pinimg.com/736x/f2/a4/88/f2a488735506e4fec05b787c057e3903.jpg"
+                            alt="Kompor Portable"
+                            class="w-full h-56 object-cover transition-transform duration-500 hover:scale-105">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="font-bold text-xl mb-2">Kompor Portable Gas</h3>
+                        <p class="text-gray-600 text-sm mb-4">Praktis dan efisien, cocok untuk memasak saat camping
+                            dengan flame control. Dilengkapi dengan case.</p>
+
+                    </div>
+                </div>
+
+                <!-- Product 4 -->
+                <div class="product-card bg-white rounded-xl overflow-hidden shadow-md">
+                    <div class="relative overflow-hidden">
+                        <img src="https://i.pinimg.com/736x/8c/03/2a/8c032aaeef01f51f8c9caded7b412982.jpg"
+                            alt="Nesting Cookset"
+                            class="w-full h-56 object-cover transition-transform duration-500 hover:scale-105">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="font-bold text-xl mb-2">Nesting Cookset 5 pcs</h3>
+                        <p class="text-gray-600 text-sm mb-4">Set perlengkapan masak lengkap untuk camping. Terdiri dari
+                            panci, wajan, teko, dan mangkuk yang saling menyatu.</p>
+
+                    </div>
+                </div>
+
+                <!-- Product 5 -->
+                <div class="product-card bg-white rounded-xl overflow-hidden shadow-md">
+                    <div class="relative overflow-hidden">
+                        <img src="https://i.pinimg.com/1200x/17/c4/e9/17c4e9c990f65a646f8b67160abcd1fb.jpg"
+                            alt="Headlamp"
+                            class="w-full h-56 object-cover transition-transform duration-500 hover:scale-105">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="font-bold text-xl mb-2">Headlamp LED</h3>
+                        <p class="text-gray-600 text-sm mb-4">Lampu kepala dengan brightness tinggi, memiliki beberapa
+                            mode cahaya. Tahan air dan nyaman digunakan.</p>
+
+                    </div>
+                </div>
+
+                <!-- Product 6 -->
+                <div class="product-card bg-white rounded-xl overflow-hidden shadow-md">
+                    <div class="relative overflow-hidden">
+                        <span class="showcase-badge" style="background: #f59e0b;">Rekomendasi</span>
+                        <img src="https://i.pinimg.com/736x/aa/1b/35/aa1b35d21c80e6e49390769317b05b49.jpg"
+                            alt="Kursi Lipat"
+                            class="w-full h-56 object-cover transition-transform duration-500 hover:scale-105">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="font-bold text-xl mb-2">Kursi Lipat Portable</h3>
+                        <p class="text-gray-600 text-sm mb-4">Kursi lipat yang nyaman dan kokoh, mudah dibawa dengan tas
+                            carrier. Bahan oxford tahan air dan rangka aluminium.</p>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="text-center mt-12">
+                <a href="#categories"
+                    class="inline-block bg-gray-100 hover:bg-gray-200 text-gray-800 font-bold py-3 px-8 rounded-lg transition duration-300">
+                    Lihat Semua Kategori
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <section id="testimonials" class="py-16 bg-gray-50">
+        <div class="container mx-auto px-6">
+            <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4 text-center">Apa Kata Pelanggan Kami?</h2>
+            <p class="text-gray-600 text-center max-w-2xl mx-auto mb-12">Testimoni dari pelanggan yang telah merasakan
+                pengalaman camping dengan perlengkapan dari Alambara</p>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Testimonial 1 -->
+                <div class="testimonial-card">
+                    <div class="flex items-center mb-4">
+                        <div class="flex items-center">
+                            <div class="text-yellow-400 flex">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 mb-6">"Perlengkapan campingnya lengkap dan berkualitas. Tenda yang saya sewa
+                        masih sangat baru dan bersih. Proses sewa juga mudah dan cepat. Pasti akan sewa lagi di sini!"
+                    </p>
+                    <div class="flex items-center">
+                        <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Customer"
+                            class="w-12 h-12 rounded-full mr-4">
+                        <div>
+                            <h4 class="font-bold text-gray-800">Budi Santoso</h4>
+                            <p class="text-sm text-gray-600">Jakarta</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Testimonial 2 -->
+                <div class="testimonial-card">
+                    <div class="flex items-center mb-4">
+                        <div class="flex items-center">
+                            <div class="text-yellow-400 flex">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 mb-6">"Saya sangat puas dengan pelayanan Alambara. Perlengkapan datang tepat
+                        waktu dan dalam kondisi sangat baik. Harganya juga terjangkau dibandingkan dengan tempat sewa
+                        lainnya."</p>
+                    <div class="flex items-center">
+                        <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Customer"
+                            class="w-12 h-12 rounded-full mr-4">
+                        <div>
+                            <h4 class="font-bold text-gray-800">Dewi Anggraini</h4>
+                            <p class="text-sm text-gray-600">Bandung</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Testimonial 3 -->
+                <div class="testimonial-card">
+                    <div class="flex items-center mb-4">
+                        <div class="flex items-center">
+                            <div class="text-yellow-400 flex">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 mb-6">"Pengalaman camping pertama keluarga saya menjadi sangat menyenangkan
+                        berkat perlengkapan dari Alambara. Petugasnya sangat helpful dalam merekomendasikan peralatan
+                        yang cocok untuk pemula."</p>
+                    <div class="flex items-center">
+                        <img src="https://randomuser.me/api/portraits/men/67.jpg" alt="Customer"
+                            class="w-12 h-12 rounded-full mr-4">
+                        <div>
+                            <h4 class="font-bold text-gray-800">Ahmad Rizky</h4>
+                            <p class="text-sm text-gray-600">Bogor</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <section id="contact" class="py-16 bg-white">
+        <div class="container mx-auto px-6">
+            <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4 text-center">Hubungi Kami</h2>
+            <p class="text-gray-600 text-center max-w-2xl mx-auto mb-12">Punya pertanyaan tentang produk kami? Jangan
+                ragu untuk menghubungi kami.</p>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+                <div class="contact-icon-card">
+                    <div class="bg-green-100 p-4 rounded-full mb-4">
+                        <i class="fas fa-map-marker-alt text-green-600 text-2xl"></i>
+                    </div>
+                    <h3 class="font-bold text-gray-800 mb-2">Lokasi</h3>
+                    <p class="text-gray-600 text-sm">Jl. Camping No. 123, Jakarta Selatan</p>
+                </div>
+
+                <div class="contact-icon-card">
+                    <div class="bg-green-100 p-4 rounded-full mb-4">
+                        <i class="fas fa-phone-alt text-green-600 text-2xl"></i>
+                    </div>
+                    <h3 class="font-bold text-gray-800 mb-2">Telepon</h3>
+                    <p class="text-gray-600 text-sm">+62 21 123 4567</p>
+                </div>
+
+                <div class="contact-icon-card">
+                    <div class="bg-green-100 p-4 rounded-full mb-4">
+                        <i class="fas fa-envelope text-green-600 text-2xl"></i>
+                    </div>
+                    <h3 class="font-bold text-gray-800 mb-2">Email</h3>
+                    <p class="text-gray-600 text-sm">alambaraweb@gmail.com</p>
+                </div>
+            </div>
+
+            <div class="flex flex-col lg:flex-row gap-10">
+                <div class="w-full lg:w-1/2 rounded-xl overflow-hidden shadow-lg">
+                    <iframe
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3966.52906471852!2d106.824248714769!3d-6.194723195514619!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e69f44ac84b2e67%3A0x6e2621f8a851e39a!2sMonas!5e0!3m2!1sid!2sid!4v1628173570000!5m2!1sid!2sid"
+                        width="100%" height="500" style="border:0;" allowfullscreen="" loading="lazy"
+                        class="rounded-xl"></iframe>
+                </div>
+                <div class="w-full lg:w-1/2">
+                    <form action="#" method="POST" class="bg-gray-50 p-8 rounded-xl shadow-md">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-5 mb-5">
+                            <div>
+                                <label for="name" class="block text-sm font-medium text-gray-700 mb-1">Nama
+                                    Lengkap</label>
+                                <input type="text" id="name" name="name" placeholder="Nama Anda"
+                                    class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent transition-colors"
+                                    required>
+                            </div>
+                            <div>
+                                <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Email</label>
+                                <input type="email" id="email" name="email" placeholder="email@contoh.com"
+                                    class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent transition-colors"
+                                    required>
+                            </div>
+                        </div>
+                        <div class="mb-5">
+                            <label for="subject" class="block text-sm font-medium text-gray-700 mb-1">Subjek</label>
+                            <input type="text" id="subject" name="subject" placeholder="Subjek pesan"
+                                class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent transition-colors"
+                                required>
+                        </div>
+                        <div class="mb-6">
+                            <label for="message" class="block text-sm font-medium text-gray-700 mb-1">Pesan</label>
+                            <textarea id="message" name="message" rows="5" placeholder="Tulis pesan Anda di sini..."
+                                class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent transition-colors"
+                                required></textarea>
+                        </div>
+                        <button type="submit"
+                            class="w-full bg-green-600 text-white font-bold py-3 px-8 rounded-lg hover:bg-green-700 transition duration-300 flex items-center justify-center">
+                            <i class="fas fa-paper-plane mr-2"></i> Kirim Pesan
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-gray-800 text-gray-300 py-12">
+        <div class="container mx-auto px-6 grid grid-cols-1 md:grid-cols-4 gap-8">
+            <div>
+                <h4 class="font-bold text-xl mb-4 text-white flex items-center">
+                    <i class="fas fa-campground mr-2"></i> Alambara
+                </h4>
+                <p class="text-sm mb-4">Menampilkan perlengkapan camping berkualitas untuk petualangan Anda.</p>
+                <div class="flex space-x-4">
+                    <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                    <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                    <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                        <i class="fab fa-youtube"></i>
+                    </a>
+                </div>
+            </div>
+            <div>
+                <h4 class="font-bold text-lg mb-4 text-white">Menu</h4>
+                <ul class="space-y-3">
+                    <li><a href="#" class="hover:text-white transition-colors flex items-center"><i
+                                class="fas fa-chevron-right text-xs mr-2"></i> Beranda</a></li>
+                    <li><a href="#showcase" class="hover:text-white transition-colors flex items-center"><i
+                                class="fas fa-chevron-right text-xs mr-2"></i> Showcase</a></li>
+                    <li><a href="#categories" class="hover:text-white transition-colors flex items-center"><i
+                                class="fas fa-chevron-right text-xs mr-2"></i> Kategori</a></li>
+                    <li><a href="#contact" class="hover:text-white transition-colors flex items-center"><i
+                                class="fas fa-chevron-right text-xs mr-2"></i> Kontak</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="font-bold text-lg mb-4 text-white">Kategori</h4>
+                <ul class="space-y-3">
+                    <li><a href="#" class="hover:text-white transition-colors flex items-center"><i
+                                class="fas fa-chevron-right text-xs mr-2"></i> Tenda</a></li>
+                    <li><a href="#" class="hover:text-white transition-colors flex items-center"><i
+                                class="fas fa-chevron-right text-xs mr-2"></i> Sleeping Bag</a></li>
+                    <li><a href="#" class="hover:text-white transition-colors flex items-center"><i
+                                class="fas fa-chevron-right text-xs mr-2"></i> Alat Masak</a></li>
+                    <li><a href="#" class="hover:text-white transition-colors flex items-center"><i
+                                class="fas fa-chevron-right text-xs mr-2"></i> Penerangan</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="font-bold text-lg mb-4 text-white">Kontak</h4>
+                <ul class="space-y-3">
+                    <li class="flex items-start">
+                        <i class="fas fa-map-marker-alt mr-3 mt-1 text-green-500"></i>
+                        <span>Papah, Karanganyar, Jawa Tengah</span>
+                    </li>
+                    <li class="flex items-center">
+                        <i class="fas fa-phone-alt mr-3 text-green-500"></i>
+                        <span>+62 21 123 4567</span>
+                    </li>
+                    <li class="flex items-center">
+                        <i class="fas fa-envelope mr-3 text-green-500"></i>
+                        <span>alambaraweb@gmail.com</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </footer>
+
+    <a href="#" id="back-to-top" class="back-to-top hidden">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+
+    <script>
+        // Event listener untuk header sticky dan back-to-top button
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('.sticky-header');
+            const backToTopBtn = document.getElementById('back-to-top');
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+                backToTopBtn.classList.add('visible');
+            } else {
+                header.classList.remove('scrolled');
+                backToTopBtn.classList.remove('visible');
+            }
+        });
+
+        // Event listener untuk menu mobile
+        const menuButton = document.getElementById('menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        menuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('open');
+        });
+
+        // Event listener untuk back-to-top button
+        document.getElementById('back-to-top').addEventListener('click', (e) => {
+            e.preventDefault();
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+    </script>
+
+</body>
+
+</html>
