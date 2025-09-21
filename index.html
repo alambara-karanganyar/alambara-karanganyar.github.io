@@ -12,9 +12,18 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
 
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
         body {
             font-family: 'Poppins', sans-serif;
             scroll-behavior: smooth;
+            width: 100%;
+            overflow-x: hidden;
         }
 
         .gradient-bg {
@@ -253,7 +262,66 @@
             left: 100%;
         }
 
+
+        @media (min-width: 640px) {
+            .container {
+                max-width: 640px;
+            }
+        }
+
         /* Responsive adjustments for product cards */
+        @media (max-width: 767px) {
+
+            body,
+            html {
+                width: 100%;
+                overflow-x: hidden;
+            }
+
+            .container {
+                padding-left: 1rem;
+                padding-right: 1rem;
+            }
+
+            .px-6 {
+                padding-left: 1rem;
+                padding-right: 1rem;
+            }
+
+            .mx-auto {
+                margin-left: auto;
+                margin-right: auto;
+            }
+
+            /* Memastikan elemen tidak melebihi lebar viewport */
+            img,
+            iframe,
+            video {
+                max-width: 100%;
+                height: auto;
+            }
+
+            /* Perbaikan grid pada mobile */
+            .grid {
+                width: 100%;
+            }
+
+            /* Padding yang lebih kecil pada mobile */
+            .p-8,
+            .p-10 {
+                padding: 1.5rem;
+            }
+
+            /* Ukuran font pada mobile */
+            .text-3xl {
+                font-size: 1.875rem;
+            }
+
+            .text-4xl {
+                font-size: 2rem;
+            }
+        }
+
         @media (max-width: 767px) {
             .product-card {
                 margin-bottom: 1rem;
@@ -341,7 +409,7 @@
                     data-aos-duration="500">Jelajahi Alam Terbuka dengan Perlengkapan
                     Terbaik</h1>
                 <p class="text-lg md:text-xl max-w-2xl mx-auto mb-8 md:mb-10" data-aos="fade-down"
-                    data-aos-duration="500" data-aos-delay="200">Lihat koleksi perlengkapan camping berkualitas
+                    data-aos-duration="500" data-aos-delay="200">Lihat perlengkapan camping berkualitas
                     tinggi untuk petualangan Anda berikutnya. Tenda, sleeping bag, alat masak, dan banyak lagi.</p>
                 <div class="flex flex-col sm:flex-row gap-3 justify-center" data-aos="fade-up" data-aos-duration="500"
                     data-aos-delay="400">
@@ -560,7 +628,7 @@
                             class="w-full h-40 md:h-56 object-cover transition-transform duration-500 hover:scale-105 product-image">
                     </div>
                     <div class="p-3 md:p-4 product-content">
-                        <h3 class="font-bold text-sm md:text-base lg:text-xl mb-1 md:mb-2 product-title">Jaket 
+                        <h3 class="font-bold text-sm md:text-base lg:text-xl mb-1 md:mb-2 product-title">Jaket
                             Gunung Gorpcore</h3>
                         <p class="text-gray-600 text-xs md:text-sm mb-3 md:mb-4 product-description">
                             Jaket windproof dan waterproof khusus pendaki. Nyaman dipakai di suhu dingin,
