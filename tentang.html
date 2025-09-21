@@ -1,34 +1,46 @@
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tentang Kami - Alambara Rentals</title>
+    <link rel="icon" type="image/png" href="/asset/logo.png" >
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
         
         body {
             font-family: 'Poppins', sans-serif;
             scroll-behavior: smooth;
+            width: 100%;
+            overflow-x: hidden;
         }
-        
+
         .gradient-bg {
-            background-image: linear-gradient(to bottom, rgba(0,0,0,0.6), rgba(0,0,0,0.2));
+            background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.2));
         }
-        
+
         .sticky-header {
             position: sticky;
             top: 0;
             z-index: 50;
             transition: all 0.3s ease;
+            width: 100%;
         }
-        
+
         .sticky-header.scrolled {
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
         }
-        
+
         .back-to-top {
             position: fixed;
             bottom: 2rem;
@@ -48,33 +60,33 @@
             transition: all 0.3s ease;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
-        
+
         .back-to-top.visible {
             opacity: 1;
             visibility: visible;
         }
-        
+
         .mobile-menu {
             transition: all 0.3s ease;
             max-height: 0;
             overflow: hidden;
         }
-        
+
         .mobile-menu.open {
             max-height: 300px;
         }
-        
+
         .timeline-item {
             position: relative;
             padding-left: 3rem;
             padding-bottom: 3rem;
             border-left: 2px solid #16a34a;
         }
-        
+
         .timeline-item:last-child {
             padding-bottom: 0;
         }
-        
+
         .timeline-dot {
             position: absolute;
             left: -0.65rem;
@@ -84,104 +96,271 @@
             border-radius: 50%;
             background: #16a34a;
         }
-        
+
         .value-card {
             transition: transform 0.3s ease;
             height: 100%;
         }
-        
+
         .value-card:hover {
             transform: translateY(-5px);
         }
-        
+
         .team-card {
             transition: transform 0.3s ease;
         }
-        
+
         .team-card:hover {
             transform: translateY(-5px);
         }
-        
+
         .stat-card {
             transition: transform 0.3s ease;
         }
-        
+
         .stat-card:hover {
             transform: scale(1.05);
         }
+
+        /* Hero section dengan background image */
+        .hero-section {
+            background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://images.unsplash.com/photo-1504851149312-7a075b496cc7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1468&q=80');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            width: 100%;
+            position: relative;
+        }
+
+        /* Animasi Kustom */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+        
+        .animate-fadeIn {
+            animation: fadeIn 1s ease-out forwards;
+        }
+        
+        .animate-pulse-slow {
+            animation: pulse 3s infinite ease-in-out;
+        }
+        
+        .animate-float {
+            animation: float 3s infinite ease-in-out;
+        }
+        
+        .delay-100 { animation-delay: 100ms; }
+        .delay-200 { animation-delay: 200ms; }
+        .delay-300 { animation-delay: 300ms; }
+        .delay-400 { animation-delay: 400ms; }
+        .delay-500 { animation-delay: 500ms; }
+
+        /* Container fix untuk mobile */
+        .container {
+            width: 100%;
+            margin-right: auto;
+            margin-left: auto;
+            padding-left: 1rem;
+            padding-right: 1rem;
+        }
+        
+        @media (min-width: 640px) {
+            .container {
+                max-width: 640px;
+            }
+        }
+        
+        @media (min-width: 768px) {
+            .container {
+                max-width: 768px;
+                padding-left: 1.5rem;
+                padding-right: 1.5rem;
+            }
+        }
+        
+        @media (min-width: 1024px) {
+            .container {
+                max-width: 1024px;
+                padding-left: 2rem;
+                padding-right: 2rem;
+            }
+        }
+        
+        @media (min-width: 1280px) {
+            .container {
+                max-width: 1280px;
+            }
+        }
+
+        /* Perbaikan untuk mobile */
+        @media (max-width: 767px) {
+            body, html {
+                width: 100%;
+                overflow-x: hidden;
+            }
+            
+            .hero-section {
+                background-attachment: scroll;
+            }
+            
+            .px-6 {
+                padding-left: 1rem;
+                padding-right: 1rem;
+            }
+            
+            .mx-auto {
+                margin-left: auto;
+                margin-right: auto;
+            }
+            
+            /* Memastikan elemen tidak melebihi lebar viewport */
+            img, iframe, video {
+                max-width: 100%;
+                height: auto;
+            }
+            
+            /* Perbaikan grid pada mobile */
+            .grid {
+                width: 100%;
+            }
+            
+            /* Padding yang lebih kecil pada mobile */
+            .p-8 {
+                padding: 1.5rem;
+            }
+            
+            /* Ukuran font pada mobile */
+            .text-3xl {
+                font-size: 1.875rem;
+            }
+            
+            .text-4xl {
+                font-size: 2rem;
+            }
+            
+            .text-5xl {
+                font-size: 2.5rem;
+            }
+            
+            /* Timeline adjustment for mobile */
+            .timeline-item {
+                padding-left: 2rem;
+            }
+            
+            .timeline-dot {
+                left: -0.5rem;
+                width: 1rem;
+                height: 1rem;
+            }
+            
+            /* Value cards adjustment */
+            .value-card {
+                margin-bottom: 1.5rem;
+            }
+        }
     </style>
 </head>
+
 <body class="bg-gray-100 text-gray-800">
 
-<header class="sticky-header bg-white">
-    <nav class="container mx-auto px-6 py-4 flex items-center justify-between">
-        <div class="flex items-center">
-            <a href="index.html" class="text-green-600 font-bold text-2xl flex items-center">
-                <i class="fas fa-campground mr-2"></i> Alambara
-            </a>
-        </div>
-        <div class="hidden md:flex space-x-8">
-            <a href="index.html" class="text-gray-600 hover:text-green-600 font-medium transition-colors">Beranda</a>
-            <a href="perlengkapan.html" class="text-gray-600 hover:text-green-600 font-medium transition-colors">Perlengkapan</a>
-            <a href="tentang.html" class="text-green-600 font-medium transition-colors">Tentang Kami</a>
-            <a href="kontak.html" class="text-gray-600 hover:text-green-600 font-medium transition-colors">Kontak</a>
-        </div>
-        <div class="flex items-center space-x-4">
-            <a href="#" class="hidden md:block text-gray-600 hover:text-green-600">
-                <i class="fas fa-search text-lg"></i>
-            </a>
-            
-            <button id="menu-button" class="md:hidden text-gray-600 focus:outline-none">
-                <i class="fas fa-bars text-2xl"></i>
-            </button>
-        </div>
-    </nav>
-    <div id="mobile-menu" class="mobile-menu md:hidden bg-white shadow-md">
-        <div class="container mx-auto px-6 py-3">
-            <a href="index.html" class="block py-3 text-gray-600 hover:text-green-600 font-medium border-b border-gray-100">Beranda</a>
-            <a href="perlengkapan.html" class="block py-3 text-gray-600 hover:text-green-600 font-medium border-b border-gray-100">Perlengkapan</a>
-            <a href="tentang.html" class="block py-3 text-green-600 font-medium border-b border-gray-100">Tentang Kami</a>
-            <a href="kontak.html" class="block py-3 text-gray-600 hover:text-green-600 font-medium border-b border-gray-100">Kontak</a>
-            <div class="flex justify-between py-4">
-                <a href="#" class="text-gray-600 hover:text-green-600">
+    <header class="sticky-header bg-white">
+        <nav class="container mx-auto py-4 flex items-center justify-between">
+            <div class="flex items-center">
+                <a href="index.html" class="text-green-600 font-bold text-xl md:text-2xl flex items-center">
+                    <i class="fas fa-campground mr-2"></i> Alambara
+                </a>
+            </div>
+            <div class="hidden md:flex space-x-6 lg:space-x-8">
+                <a href="index.html"
+                    class="text-gray-600 hover:text-green-600 font-medium transition-colors">Beranda</a>
+                <a href="perlengkapan.html"
+                    class="text-gray-600 hover:text-green-600 font-medium transition-colors">Perlengkapan</a>
+                <a href="tentang.html" class="text-green-600 font-medium transition-colors">Tentang Kami</a>
+                <a href="kontak.html"
+                    class="text-gray-600 hover:text-green-600 font-medium transition-colors">Kontak</a>
+            </div>
+            <div class="flex items-center space-x-4">
+                <a href="#" class="hidden md:block text-gray-600 hover:text-green-600">
                     <i class="fas fa-search text-lg"></i>
+                </a>
+
+                <button id="menu-button" class="md:hidden text-gray-600 focus:outline-none">
+                    <i class="fas fa-bars text-xl"></i>
+                </button>
+            </div>
+        </nav>
+        <div id="mobile-menu" class="mobile-menu md:hidden bg-white shadow-md">
+            <div class="container mx-auto py-3">
+                <a href="index.html"
+                    class="block py-3 text-gray-600 hover:text-green-600 font-medium border-b border-gray-100">Beranda</a>
+                <a href="perlengkapan.html"
+                    class="block py-3 text-gray-600 hover:text-green-600 font-medium border-b border-gray-100">Perlengkapan</a>
+                <a href="tentang.html" class="block py-3 text-green-600 font-medium border-b border-gray-100">Tentang
+                    Kami</a>
+                <a href="kontak.html"
+                    class="block py-3 text-gray-600 hover:text-green-600 font-medium border-b border-gray-100">Kontak</a>
+              
+            </div>
+        </div>
+    </header>
+
+    <section class="hero-section text-white py-28 md:py-36 flex items-center">
+        <div class="container mx-auto text-center">
+            <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 animate-fadeIn" data-aos="fade-down" data-aos-duration="500">
+                Tentang Alambara
+            </h1>
+            <p class="text-xl md:text-2xl max-w-3xl mx-auto mb-8 animate-fadeIn delay-100" data-aos="fade-down" data-aos-duration="500" data-aos-delay="100">
+                Membuat petualangan camping menjadi lebih mudah dan menyenangkan sejak 2015
+            </p>
+            <div class="animate-fadeIn delay-200" data-aos="fade-up" data-aos-duration="500" data-aos-delay="200">
+                <a href="#tentang-kami" class="bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-8 rounded-lg transition duration-300 inline-flex items-center justify-center mx-2 my-2">
+                    <i class="fas fa-info-circle mr-2"></i> Pelajari Lebih Lanjut
+                </a>
+                <a href="kontak.html" class="bg-transparent hover:bg-white hover:text-green-600 text-white border-2 border-white font-bold py-3 px-8 rounded-lg transition duration-300 inline-flex items-center justify-center mx-2 my-2">
+                    <i class="fas fa-envelope mr-2"></i> Hubungi Kami
                 </a>
             </div>
         </div>
-    </div>
-</header>
-
-    <section class="bg-green-600 text-white py-20">
-        <div class="container mx-auto px-6 text-center">
-            <h1 class="text-4xl md:text-5xl font-bold mb-6">Tentang Tentang Alambara</h1>
-            <p class="text-xl max-w-3xl mx-auto">Membuat petualangan camping menjadi lebih mudah dan menyenangkan sejak 2015</p>
-        </div>
     </section>
 
-    <section class="py-16 bg-white">
-        <div class="container mx-auto px-6">
+    <section id="tentang-kami" class="py-12 md:py-16 bg-white">
+        <div class="container mx-auto">
             <div class="flex flex-col md:flex-row items-center">
-                <div class="w-full md:w-1/2 mb-10 md:mb-0">
-                    <img src="https://images.unsplash.com/photo-1523987355523-c7b5b0dd90a7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" 
-                         alt="Tentang CampGear" class="rounded-xl shadow-lg">
+                <div class="w-full md:w-1/2 mb-8 md:mb-0" data-aos="fade-right" data-aos-duration="500">
+                    <img src="https://images.unsplash.com/photo-1523987355523-c7b5b0dd90a7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80"
+                        alt="Tentang CampGear" class="rounded-xl shadow-lg w-full animate-float">
                 </div>
-                <div class="w-full md:w-1/2 md:pl-12">
-                    <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-6">Tentang Alambara</h2>
+                <div class="w-full md:w-1/2 md:pl-8 lg:pl-12" data-aos="fade-left" data-aos-duration="500" data-aos-delay="200">
+                    <h2 class="text-2xl md:text-4xl font-bold text-gray-800 mb-4 md:mb-6">Tentang Alambara</h2>
                     <p class="text-gray-600 mb-4">Alambara Adventure lahir dari kecintaan terhadap alam dan petualangan.
                         Kami hadir untuk memperkenalkan serta memfasilitasi pengalaman outdoor yang tak terlupakan bagi
                         siapa saja, baik pemula maupun mereka yang sudah berpengalaman menjelajah alam. Dengan layanan
                         yang kami sediakan, setiap orang dapat menikmati kegiatan seperti camping, hiking, dan aktivitas
                         luar ruang lainnya dengan lebih mudah, aman, dan menyenangkan.
-
-                        </p>
-                    <p class="text-gray-600 mb-6">Kami menyediakan berbagai kebutuhan petualangan, mulai dari penyewaan perlengkapan outdoor
+                    </p>
+                    <p class="text-gray-600 mb-6">Kami menyediakan berbagai kebutuhan petualangan, mulai dari penyewaan
+                        perlengkapan outdoor
                         berkualitas hingga paket kegiatan seperti trekking atau camping yang sudah termasuk jasa
                         pemandu, transportasi, dan logistik. Selain itu, kami juga memberikan layanan konsultasi dalam
                         pembuatan itinerary perjalanan serta workshop seputar keterampilan dasar survival dan pengenalan
                         alam.</p>
-                    <div class="grid grid-cols-2 gap-6">
-                        <div class="flex items-center">
-                            <div class="bg-green-100 p-3 rounded-full mr-4">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-6">
+                        <div class="flex items-center" data-aos="fade-up" data-aos-duration="500" data-aos-delay="100">
+                            <div class="bg-green-100 p-3 rounded-full mr-4 animate-pulse-slow">
                                 <i class="fas fa-shield-alt text-green-600 text-xl"></i>
                             </div>
                             <div>
@@ -189,8 +368,8 @@
                                 <p class="text-sm text-gray-600">Kualitas terbaik</p>
                             </div>
                         </div>
-                         <div class="flex items-center">
-                            <div class="bg-green-100 p-3 rounded-full mr-4">
+                        <div class="flex items-center" data-aos="fade-up" data-aos-duration="500" data-aos-delay="200">
+                            <div class="bg-green-100 p-3 rounded-full mr-4 animate-pulse-slow">
                                 <i class="fas fa-money-bill-wave text-green-600 text-xl"></i>
                             </div>
                             <div>
@@ -198,8 +377,8 @@
                                 <p class="text-sm text-gray-600">harga terbaik di pasaran</p>
                             </div>
                         </div>
-                        <div class="flex items-center">
-                            <div class="bg-green-100 p-3 rounded-full mr-4">
+                        <div class="flex items-center" data-aos="fade-up" data-aos-duration="500" data-aos-delay="300">
+                            <div class="bg-green-100 p-3 rounded-full mr-4 animate-pulse-slow">
                                 <i class="fas fa-tools text-green-600 text-xl"></i>
                             </div>
                             <div>
@@ -207,8 +386,8 @@
                                 <p class="text-sm text-gray-600">500+ item</p>
                             </div>
                         </div>
-                        <div class="flex items-center">
-                            <div class="bg-green-100 p-3 rounded-full mr-4">
+                        <div class="flex items-center" data-aos="fade-up" data-aos-duration="500" data-aos-delay="400">
+                            <div class="bg-green-100 p-3 rounded-full mr-4 animate-pulse-slow">
                                 <i class="fas fa-headset text-green-600 text-xl"></i>
                             </div>
                             <div>
@@ -222,115 +401,124 @@
         </div>
     </section>
 
+    <section class="py-12 md:py-16 bg-white">
+        <div class="container mx-auto">
+            <h2 class="text-2xl md:text-4xl font-bold text-gray-800 mb-4 text-center" data-aos="fade-down" data-aos-duration="500">Sejarah Kami</h2>
+            <p class="text-gray-600 text-center max-w-2xl mx-auto mb-8 md:mb-12" data-aos="fade-down" data-aos-duration="500" data-aos-delay="100">Perjalanan Alambara dari awal hingga sekarang
+            </p>
 
-
-    <section class="py-16 bg-white">
-        <div class="container mx-auto px-6">
-            <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4 text-center">Sejarah Kami</h2>
-            <p class="text-gray-600 text-center max-w-2xl mx-auto mb-12">Perjalanan Alambara dari awal hingga sekarang</p>
-            
             <div class="max-w-4xl mx-auto">
-                <div class="timeline-item">
+                <div class="timeline-item" data-aos="fade-right" data-aos-duration="500">
                     <div class="timeline-dot"></div>
                     <div class="timeline-content">
                         <h3 class="text-xl font-bold text-gray-800">2015</h3>
                         <p class="text-green-600 font-medium">Pendirian Alambara</p>
-                        <p class="text-gray-600 mt-2">Alambara didirikan oleh tiga sahabat pecinta alam dengan modal awal yang terbatas dan hanya menyewakan 10 tenda dan 20 sleeping bag.</p>
+                        <p class="text-gray-600 mt-2">Alambara didirikan oleh tiga sahabat pecinta alam dengan modal
+                            awal yang terbatas dan hanya menyewakan 10 tenda dan 20 sleeping bag.</p>
                     </div>
                 </div>
-                
-                <div class="timeline-item">
+
+                <div class="timeline-item" data-aos="fade-left" data-aos-duration="500" data-aos-delay="100">
                     <div class="timeline-dot"></div>
                     <div class="timeline-content">
                         <h3 class="text-xl font-bold text-gray-800">2017</h3>
                         <p class="text-green-600 font-medium">Ekspansi Produk</p>
-                        <p class="text-gray-600 mt-2">Koleksi perlengkapan berkembang pesat dengan penambahan alat masak, penerangan, dan aksesoris camping. Jumlah pelanggan meningkat 300%.</p>
+                        <p class="text-gray-600 mt-2">Koleksi perlengkapan berkembang pesat dengan penambahan alat
+                            masak, penerangan, dan aksesoris camping. Jumlah pelanggan meningkat 300%.</p>
                     </div>
                 </div>
-                
-                <div class="timeline-item">
+
+                <div class="timeline-item" data-aos="fade-right" data-aos-duration="500" data-aos-delay="200">
                     <div class="timeline-dot"></div>
                     <div class="timeline-content">
                         <h3 class="text-xl font-bold text-gray-800">2019</h3>
                         <p class="text-green-600 font-medium">Website dan Layanan Online</p>
-                        <p class="text-gray-600 mt-2">Meluncurkan website untuk memudahkan pemesanan secara online dan memperluas jangkauan layanan ke seluruh Jabodetabek.</p>
+                        <p class="text-gray-600 mt-2">Meluncurkan website untuk memudahkan pemesanan secara online dan
+                            memperluas jangkauan layanan ke seluruh Jabodetabek.</p>
                     </div>
                 </div>
-                
-                <div class="timeline-item">
+
+                <div class="timeline-item" data-aos="fade-left" data-aos-duration="500" data-aos-delay="300">
                     <div class="timeline-dot"></div>
                     <div class="timeline-content">
                         <h3 class="text-xl font-bold text-gray-800">2021</h3>
                         <p class="text-green-600 font-medium">Mitra Komunitas</p>
-                        <p class="text-gray-600 mt-2">Bekerja sama dengan berbagai komunitas hiking dan camping untuk menyelenggarakan event dan workshop outdoor secara rutin.</p>
+                        <p class="text-gray-600 mt-2">Bekerja sama dengan berbagai komunitas hiking dan camping untuk
+                            menyelenggarakan event dan workshop outdoor secara rutin.</p>
                     </div>
                 </div>
-                
-                <div class="timeline-item">
+
+                <div class="timeline-item" data-aos="fade-right" data-aos-duration="500" data-aos-delay="400">
                     <div class="timeline-dot"></div>
                     <div class="timeline-content">
                         <h3 class="text-xl font-bold text-gray-800">2023</h3>
                         <p class="text-green-600 font-medium">Ekspansi Nasional</p>
-                        <p class="text-gray-600 mt-2">Memiliki lebih dari 500 item perlengkapan camping dan melayani pelanggan dari berbagai kota di Indonesia dengan sistem pengiriman nasional.</p>
+                        <p class="text-gray-600 mt-2">Memiliki lebih dari 500 item perlengkapan camping dan melayani
+                            pelanggan dari berbagai kota di Indonesia dengan sistem pengiriman nasional.</p>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <section class="py-16 bg-gray-50">
-        <div class="container mx-auto px-6">
-            <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4 text-center">Nilai-Nilai Kami</h2>
-            <p class="text-gray-600 text-center max-w-2xl mx-auto mb-12">Prinsip-prinsip yang memandu setiap langkah kami</p>
-            
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <div class="value-card bg-white p-8 rounded-xl shadow-md flex flex-col">
+    <section class="py-12 md:py-16 bg-gray-50">
+        <div class="container mx-auto">
+            <h2 class="text-2xl md:text-4xl font-bold text-gray-800 mb-4 text-center" data-aos="fade-down" data-aos-duration="500">Nilai-Nilai Kami</h2>
+            <p class="text-gray-600 text-center max-w-2xl mx-auto mb-8 md:mb-12" data-aos="fade-down" data-aos-duration="500" data-aos-delay="100">Prinsip-prinsip yang memandu setiap langkah
+                kami</p>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
+                <div class="value-card bg-white p-6 md:p-8 rounded-xl shadow-md flex flex-col" data-aos="flip-left" data-aos-duration="500" data-aos-delay="200">
                     <div class="text-center mb-6">
                         <div class="bg-green-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto">
                             <i class="fas fa-handshake text-green-600 text-2xl"></i>
                         </div>
                     </div>
                     <h3 class="text-xl font-bold text-gray-800 mb-4 text-center">Keandalan</h3>
-                    <p class="text-gray-600 text-center flex-grow">Kami memastikan semua perlengkapan dalam kondisi terbaik dan siap digunakan untuk petualangan Anda. Keandalan adalah janji kami.</p>
+                    <p class="text-gray-600 text-center flex-grow">Kami memastikan semua perlengkapan dalam kondisi
+                        terbaik dan siap digunakan untuk petualangan Anda. Keandalan adalah janji kami.</p>
                 </div>
-                
-                <div class="value-card bg-white p-8 rounded-xl shadow-md flex flex-col">
+
+                <div class="value-card bg-white p-6 md:p-8 rounded-xl shadow-md flex flex-col" data-aos="flip-left" data-aos-duration="500" data-aos-delay="300">
                     <div class="text-center mb-6">
                         <div class="bg-green-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto">
                             <i class="fas fa-heart text-green-600 text-2xl"></i>
                         </div>
                     </div>
                     <h3 class="text-xl font-bold text-gray-800 mb-4 text-center">Passion</h3>
-                    <p class="text-gray-600 text-center flex-grow">Kami adalah pecinta alam sejati yang memahami kebutuhan Anda. Passion kami terhadap alam terbuka tercermin dalam setiap layanan.</p>
+                    <p class="text-gray-600 text-center flex-grow">Kami adalah pecinta alam sejati yang memahami
+                        kebutuhan Anda. Passion kami terhadap alam terbuka tercermin dalam setiap layanan.</p>
                 </div>
-                
-                <div class="value-card bg-white p-8 rounded-xl shadow-md flex flex-col">
+
+                <div class="value-card bg-white p-6 md:p-8 rounded-xl shadow-md flex flex-col" data-aos="flip-left" data-aos-duration="500" data-aos-delay="400">
                     <div class="text-center mb-6">
                         <div class="bg-green-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto">
                             <i class="fas fa-leaf text-green-600 text-2xl"></i>
                         </div>
                     </div>
                     <h3 class="text-xl font-bold text-gray-800 mb-4 text-center">Berkelanjutan</h3>
-                    <p class="text-gray-600 text-center flex-grow">Kami mendukung gaya hidup berkelanjutan dengan mempromosikan sharing economy melalui layanan sewa perlengkapan camping.</p>
+                    <p class="text-gray-600 text-center flex-grow">Kami mendukung gaya hidup berkelanjutan dengan
+                        mempromosikan sharing economy melalui layanan sewa perlengkapan camping.</p>
                 </div>
             </div>
         </div>
     </section>
 
-
-    <section class="py-16 bg-gray-100">
-        <div class="container mx-auto px-6 text-center">
-            <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-6">Tertarik untuk Berkolaborasi?</h2>
-            <p class="text-gray-600 max-w-2xl mx-auto mb-8">Kami selalu terbuka untuk kemitraan dengan komunitas, event organizer, atau bisnis yang sejalan dengan nilai-nilai kami</p>
-            <a href="index.html#contact" class="bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-8 rounded-lg transition duration-300 inline-flex items-center">
+    <section class="py-12 md:py-16 bg-gray-100">
+        <div class="container mx-auto text-center">
+            <h2 class="text-2xl md:text-4xl font-bold text-gray-800 mb-4 md:mb-6" data-aos="zoom-in" data-aos-duration="500">Tertarik untuk Berkolaborasi?</h2>
+            <p class="text-gray-600 max-w-2xl mx-auto mb-6 md:mb-8" data-aos="zoom-in" data-aos-duration="500" data-aos-delay="100">Kami selalu terbuka untuk kemitraan dengan komunitas, event
+                organizer, atau bisnis yang sejalan dengan nilai-nilai kami</p>
+            <a href="index.html#contact"
+                class="bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-8 rounded-lg transition duration-300 inline-flex items-center justify-center" data-aos="zoom-in" data-aos-duration="500" data-aos-delay="200">
                 <i class="fas fa-envelope mr-2"></i> Hubungi Kami
             </a>
         </div>
     </section>
 
     <footer class="bg-gray-800 text-gray-300 py-12">
-        <div class="container mx-auto px-6 grid grid-cols-1 md:grid-cols-4 gap-8">
-            <div>
+        <div class="container mx-auto grid grid-cols-1 md:grid-cols-4 gap-8">
+            <div data-aos="fade-up" data-aos-duration="500">
                 <h4 class="font-bold text-xl mb-4 text-white flex items-center">
                     <i class="fas fa-campground mr-2"></i> Alambara
                 </h4>
@@ -350,50 +538,62 @@
                     </a>
                 </div>
             </div>
-            <div>
+            <div data-aos="fade-up" data-aos-duration="500" data-aos-delay="100">
                 <h4 class="font-bold text-lg mb-4 text-white">Menu</h4>
                 <ul class="space-y-3">
-                    <li><a href="index.html" class="hover:text-white transition-colors flex items-center"><i class="fas fa-chevron-right text-xs mr-2"></i> Beranda</a></li>
-                    <li><a href="perlengkapan.html" class="hover:text-white transition-colors flex items-center"><i class="fas fa-chevron-right text-xs mr-2"></i> Perlengkapan</a></li>
-                    <li><a href="tentang.html" class="hover:text-white transition-colors flex items-center"><i class="fas fa-chevron-right text-xs mr-2"></i> Tentang Kami</a></li>
-                    <li><a href="index.html#contact" class="hover:text-white transition-colors flex items-center"><i class="fas fa-chevron-right text-xs mr-2"></i> Kontak</a></li>
+                    <li><a href="index.html" class="hover:text-white transition-colors flex items-center"><i
+                                class="fas fa-chevron-right text-xs mr-2"></i> Beranda</a></li>
+                    <li><a href="perlengkapan.html" class="hover:text-white transition-colors flex items-center"><i
+                                class="fas fa-chevron-right text-xs mr-2"></i> Perlengkapan</a></li>
+                    <li><a href="tentang.html" class="hover:text-white transition-colors flex items-center"><i
+                                class="fas fa-chevron-right text-xs mr-2"></i> Tentang Kami</a></li>
+                    <li><a href="index.html#contact" class="hover:text-white transition-colors flex items-center"><i
+                                class="fas fa-chevron-right text-xs mr-2"></i> Kontak</a></li>
                 </ul>
             </div>
-            <div>
+            <div data-aos="fade-up" data-aos-duration="500" data-aos-delay="200">
                 <h4 class="font-bold text-lg mb-4 text-white">Layanan</h4>
                 <ul class="space-y-3">
-                    <li><a href="#" class="hover:text-white transition-colors flex items-center"><i class="fas fa-chevron-right text-xs mr-2"></i> Sewa Perlengkapan</a></li>
-                    <li><a href="#" class="hover:text-white transition-colors flex items-center"><i class="fas fa-chevron-right text-xs mr-2"></i> Konsultasi Camping</a></li>
-                    <li><a href="#" class="hover:text-white transition-colors flex items-center"><i class="fas fa-chevron-right text-xs mr-2"></i> Event Organizer</a></li>
-                    <li><a href="#" class="hover:text-white transition-colors flex items-center"><i class="fas fa-chevron-right text-xs mr-2"></i> Workshop Outdoor</a></li>
-                </ul>
+                    <li><a href="#" class="hover:text-white transition-colors flex items-center"><i
+                                class="fas fa-chevron-right text-xs mr-2"></i> Sewa Perlengkapan</a></li>
+                    <li><a href="#" class="hover:text-white transition-colors flex items-center"><i
+                                class="fas fa-chevron-right text-xs mr-2"></i> Konsultasi Camping</a></li>
+               
             </div>
-            <div>
+            <div data-aos="fade-up" data-aos-duration="500" data-aos-delay="300">
                 <h4 class="font-bold text-lg mb-4 text-white">Kontak</h4>
                 <ul class="space-y-3">
                     <li class="flex items-start">
                         <i class="fas fa-map-marker-alt mr-3 mt-1 text-green-500"></i>
-                        <span>Jl. Camping No. 123, Jakarta Selatan, Indonesia</span>
+                        <span>Jl. Raya Papahan, Tasikmasu, Karanganyar</span>
                     </li>
                     <li class="flex items-center">
                         <i class="fas fa-phone-alt mr-3 text-green-500"></i>
-                        <span>+62 21 123 4567</span>
+                        <span>+62 000 0000 0000</span>
                     </li>
                     <li class="flex items-center">
                         <i class="fas fa-envelope mr-3 text-green-500"></i>
-                        <span>info@Alambara.com</span>
+                        <span>alambaraweb@gmail.com</span>
                     </li>
                 </ul>
             </div>
         </div>
- 
     </footer>
 
     <a href="#" id="back-to-top" class="back-to-top hidden">
         <i class="fas fa-arrow-up"></i>
     </a>
 
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
+        // Inisialisasi AOS
+        AOS.init({
+            duration: 250,
+            easing: 'ease-in-out',
+            once: true,
+            mirror: false
+        });
+
         // Event listener untuk header sticky dan back-to-top button
         window.addEventListener('scroll', () => {
             const header = document.querySelector('.sticky-header');
@@ -425,4 +625,5 @@
     </script>
 
 </body>
+
 </html>
